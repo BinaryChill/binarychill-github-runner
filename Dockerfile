@@ -41,7 +41,7 @@ USER github-runner
 WORKDIR /github-runner
 
 # Add runner env variable for configuration
-ARG GITHUB_REPO_URL
+ARG GITHUB_URL
 ARG RUNNER_TOKEN
 
 ENTRYPOINT ["./entrypoint.sh"]

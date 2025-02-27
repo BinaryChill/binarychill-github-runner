@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GITHUB_REPO_URL"
+echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GITHUB_URL"
 
 # Register runner
 ./config.sh --url "$GITHUB_URL" \
