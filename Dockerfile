@@ -19,7 +19,11 @@ RUN mkdir -p /github-runner && \
     curl -L -o /home/github-runner/actions-runner.tar.gz \
         https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz  && \
     tar xzf /home/github-runner/actions-runner.tar.gz -C /github-runner  && \
-    rm /home/github-runner/actions-runner.tar.gz
+    rm /home/github-runner/actions-runner.tar.gz 
+
+# Install github-runner dependencies
+RUN chmod +x /github-runner/bin/installdependencies.sh
+RUN /github-runner/bin/installdependencies.sh
 
 # Setup permissions
 COPY entrypoint.sh /github-runner/entrypoint.sh
