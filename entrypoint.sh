@@ -7,7 +7,7 @@ echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GI
 ./config.sh --url "$GITHUB_URL" \
             --token "$RUNNER_TOKEN" \
             --name "binarychill-github-runner" \
-            --work /work_directory \
+            --work /github_work_directory \
             --unattended \
             --replace
 
