@@ -1,21 +1,25 @@
 FROM ubuntu:24.04
 
 # Install dependencies
-RUN apt-get update \
-     && apt-get install -y \
-     curl \
-     jq \
-     git git-lfs \
-     libicu-dev \
-     && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y \
+        curl \
+        jq \
+        git git-lfs \
+        libicu-dev \
+        docker.io && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN git lfs install
 
 # Set environment variables
 ARG RUNNER_VERSION="2.322.0"
 
-# Create runner user
-RUN useradd -m github-runner
+# Create github-runner user
+RUN useradd -m github-runner && \
+    usermod -aG docker github-runner 
+
+RUN mkdir -p /var/lib/docker
 
 # Download runner binary
 RUN mkdir -p /github-runner && \
@@ -43,5 +47,7 @@ WORKDIR /github-runner
 # Add runner env variable for configuration
 ARG GITHUB_URL
 ARG RUNNER_TOKEN
+
+RUN service docker start
 
 ENTRYPOINT ["./entrypoint.sh"]
