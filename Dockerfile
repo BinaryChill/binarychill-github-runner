@@ -2,7 +2,11 @@ FROM ubuntu:24.04
 
 # Install dependencies
 RUN apt-get update \
-     && apt-get install -y curl jq git git-lfs \
+     && apt-get install -y \
+     curl \
+     jq \
+     git git-lfs \
+     libicu-dev \
      && rm -rf /var/lib/apt/lists/*
 
 RUN git lfs install
