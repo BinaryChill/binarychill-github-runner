@@ -3,6 +3,8 @@ set -e
 
 echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GITHUB_URL"
 
+ls -ailh /var/run/docker.sock
+
 # Check if the runner is already registered
 if [ -f "$GITHUB_RUNNER_CONFIGURED_FLAG" ]; then
     echo "Runner is already registered. Skipping config.sh execution."
