@@ -33,8 +33,8 @@ RUN mkdir -p /home/github-runner && \
 # Setup permissions
 COPY entrypoint.sh /entrypoint.sh
 RUN chown -R github-runner:github-runner /home/github-runner/github_runner_data && \
-    chown -R /github_work_directory && \
-    chown -R /github_runner_data && \
+    chown -R github-runner:github-runner /github_work_directory && \
+    chown -R github-runner:github-runner /github_runner_data && \
     chown github-runner:github-runner /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
