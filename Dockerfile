@@ -22,6 +22,7 @@ RUN useradd -m github-runner && \
 
 # Download runner binary
 RUN mkdir -p /home/github-runner && \
+    mkdir -p /github_runner_data && \
     curl -L -o /home/github-runner/actions-runner.tar.gz \
         https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz  && \
     tar xzf /home/github-runner/actions-runner.tar.gz -C /github_runner_data  && \
@@ -31,6 +32,7 @@ RUN mkdir -p /home/github-runner && \
 COPY entrypoint.sh /github_runner_data/entrypoint.sh
 RUN chown -R github-runner:github-runner /github_runner_data && \
     chmod +x /github_runner_data/entrypoint.sh && \
+    mkdir /github_runner_data && \
     chown -R github-runner:github-runner /github_work_directory
 
 # Switch to runner user
