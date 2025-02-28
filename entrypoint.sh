@@ -7,7 +7,7 @@ echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GI
 if [ -f "$GITHUB_RUNNER_CONFIGURED_FLAG" ]; then
     echo "Runner is already registered. Skipping config.sh execution."
 else
-  cp -R /home/github-runner/github_runner_data/* /github_runner_data/*
+  cp -R /home/github-runner/github_runner_data/* /github_runner_data/
   ls -ailh /github_runner_data
   ./config.sh --url "$GITHUB_URL" \
               --token "$RUNNER_TOKEN" \
