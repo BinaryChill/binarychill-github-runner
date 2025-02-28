@@ -32,7 +32,7 @@ RUN mkdir -p /home/github-runner && \
 COPY entrypoint.sh /github_runner_data/entrypoint.sh
 RUN chown -R github-runner:github-runner /github_runner_data && \
     chmod +x /github_runner_data/entrypoint.sh && \
-    mkdir /github_runner_data && \
+    mkdir /github_work_directory && \
     chown -R github-runner:github-runner /github_work_directory
 
 # Switch to runner user
