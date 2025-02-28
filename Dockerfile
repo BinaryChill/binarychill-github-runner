@@ -19,20 +19,19 @@ ARG RUNNER_TOKEN
 RUN useradd -m github-runner && \
     usermod -aG docker github-runner 
 
-RUN mkdir -p /var/lib/docker
-
 # Download runner binary
 RUN mkdir -p /github-runner && \
     mkdir -p /home/github-runner && \
     curl -L -o /home/github-runner/actions-runner.tar.gz \
         https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz  && \
-    tar xzf /home/github-runner/actions-runner.tar.gz -C /github-runner  && \
+    tar xzf /home/github-runner/actions-runner.tar.gz -C /github_runner_data  && \
     rm /home/github-runner/actions-runner.tar.gz 
 
 # Setup permissions
-COPY entrypoint.sh /github-runner/entrypoint.sh
-RUN chown -R github-runner:github-runner /github-runner && \
-    chmod +x /github-runner/entrypoint.sh
+COPY entrypoint.sh /github_runner_data/entrypoint.sh
+RUN chown -R github-runner:github-runner /github_runner_data && \
+    chmod +x /github_runner_data/entrypoint.sh && \
+    chown -R github-runner:github-runner /github_work_directory
 
 # Switch to runner user
 USER github-runner
