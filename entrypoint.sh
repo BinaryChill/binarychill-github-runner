@@ -4,7 +4,7 @@ set -e
 echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GITHUB_URL"
 
 # Check if the runner is already registered
-if [ -f "$CONFIGURED_FLAG" ]; then
+if [ -f "$GITHUB_RUNNER_CONFIGURED_FLAG" ]; then
     echo "Runner is already registered. Skipping config.sh execution."
 else
   ./config.sh --url "$GITHUB_URL" \
@@ -13,7 +13,7 @@ else
               --work /github_work_directory \
               --unattended \
               --replace
-  touch "$CONFIGURED_FLAG"
+  touch "$GITHUB_RUNNER_CONFIGURED_FLAG"
 fi
 
 echo "Starting runner: binarychill-github-runner $RUNNER_VERSION"
