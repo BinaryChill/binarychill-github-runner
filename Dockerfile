@@ -25,18 +25,16 @@ RUN mkdir -p /home/github-runner && \
     mkdir -p /github_runner_data && \
     curl -L -o /home/github-runner/actions-runner.tar.gz \
         https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz  && \
-    tar xzf /home/github-runner/actions-runner.tar.gz -C /github_runner_data  && \
+    tar xzf /home/github-runner/actions-runner.tar.gz -C /home/github-runner/github_runner_data  && \
     rm /home/github-runner/actions-runner.tar.gz 
 
 # Setup permissions
-COPY entrypoint.sh /github_runner_data/entrypoint.sh
-RUN chown -R github-runner:github-runner /github_runner_data && \
-    chmod +x /github_runner_data/entrypoint.sh && \
-    mkdir /github_work_directory && \
-    chown -R github-runner:github-runner /github_work_directory
+COPY entrypoint.sh /entrypoint.sh
+RUN chown -R github-runner:github-runner /home/github-runner/github_runner_data && \
+    chmod +x /entrypoint.sh
 
 # Switch to runner user
 USER github-runner
 WORKDIR /github_runner_data
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
