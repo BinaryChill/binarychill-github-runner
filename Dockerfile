@@ -7,7 +7,8 @@ RUN apt-get update && \
         jq \
         git git-lfs \
         libicu-dev \
-        docker.io && \
+        docker.io \
+        sudo && \
     rm -rf /var/lib/apt/lists/*
 
 # Set environment variables

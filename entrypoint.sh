@@ -7,8 +7,7 @@ echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GI
 if [ -f "$GITHUB_RUNNER_CONFIGURED_FLAG" ]; then
     echo "Runner is already registered. Skipping config.sh execution."
 else
-  sudo chown -R github-runner:github-runner /github_runner_data
-  
+  chown -R github-runner:github-runner /github_runner_data
   ls -ailh /
   
   cp -R /home/github-runner/github_runner_data/* /github_runner_data/
