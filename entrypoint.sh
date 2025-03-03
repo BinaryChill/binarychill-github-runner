@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Setting umask to 0002 to keep write permission on actions files
+umask 0002
+
 echo "Configuring runner: binarychill-github-runner $RUNNER_VERSION for host $GITHUB_URL"
 
 # Check if the runner is already registered

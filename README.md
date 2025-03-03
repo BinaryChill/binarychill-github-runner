@@ -29,3 +29,26 @@ As the runner needs access to docker for actions, you need to add the following 
 ```
 --privileged
 ```
+
+To avoid any permission error on the file created by the action's runner, use the following ACL commands on the host to allow automatic propagation of write permission for group.
+```sh
+sudo setfacl -d -m g::rwx /github_work_directory
+sudo setfacl -m g::rwx /github_work_directory
+
+sudo chmod -R g+w /github_work_directory
+```
+Expected result:
+```
+getfacl /github_work_directory
+
+# file: github_work_directory
+# owner: github-runner
+# group: docker
+# flags: -s-
+user::rwx
+group::rwx
+other::---
+default:user::rwx
+default:group::rwx
+default:other::---
+```
