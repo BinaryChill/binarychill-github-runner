@@ -10,44 +10,35 @@ RUN apt-get update && \
         docker.io && \
     rm -rf /var/lib/apt/lists/*
 
-RUN git lfs install
-
 # Set environment variables
 ARG RUNNER_VERSION="2.322.0"
+ARG GITHUB_URL
+ARG RUNNER_TOKEN
+ARG GITHUB_RUNNER_CONFIGURED_FLAG
+ARG GITHUB_RUNNER_USER_ID
+ARG GITHUB_RUNNER_GROUP_ID
 
-# Create github-runner user
-RUN useradd -m github-runner && \
-    usermod -aG docker github-runner 
-
-RUN mkdir -p /var/lib/docker
+# Create github-runner user, give it docker group (from host group list)
+RUN useradd -u $GITHUB_RUNNER_USER_ID github-runner && \
+    usermod -aG docker github-runner  && \
+    groupmod -g $GITHUB_RUNNER_GROUP_ID docker
 
 # Download runner binary
-RUN mkdir -p /github-runner && \
-    mkdir -p /home/github-runner && \
+RUN mkdir -p /home/github-runner && \
+    mkdir -p /home/github-runner/github_runner_data && \
     curl -L -o /home/github-runner/actions-runner.tar.gz \
         https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz  && \
-    tar xzf /home/github-runner/actions-runner.tar.gz -C /github-runner  && \
+    tar xzf /home/github-runner/actions-runner.tar.gz -C /home/github-runner/github_runner_data  && \
     rm /home/github-runner/actions-runner.tar.gz 
 
-# Install github-runner dependencies
-RUN chmod +x /github-runner/bin/installdependencies.sh
-RUN /github-runner/bin/installdependencies.sh
-
 # Setup permissions
-COPY entrypoint.sh /github-runner/entrypoint.sh
-RUN chown -R github-runner:github-runner /github-runner && \
-    chmod +x /github-runner/entrypoint.sh && \
-    mkdir -p /work_directory && \
-    chown -R github-runner:github-runner /work_directory
+COPY entrypoint.sh /entrypoint.sh
+RUN chown -R github-runner:github-runner /home/github-runner/github_runner_data && \
+    chown github-runner:github-runner /entrypoint.sh && \
+    chmod +x /entrypoint.sh
 
 # Switch to runner user
 USER github-runner
-WORKDIR /github-runner
+WORKDIR /github_runner_data
 
-# Add runner env variable for configuration
-ARG GITHUB_URL
-ARG RUNNER_TOKEN
-
-RUN service docker start
-
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
