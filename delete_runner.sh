@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Removing runner: binarychill-github-runner."
 ./config.sh remove --token "$RUNNER_TOKEN"
 

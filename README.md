@@ -24,6 +24,8 @@ Setup the two following env variables in coolify project:
   - `github-runner` User ID on the host
 - GITHUB_RUNNER_GROUP_ID
   - `docker` Group ID on the host
+- ACTIONS_RUNNER_HOOK_JOB_STARTED
+- ACTIONS_RUNNER_HOOK_JOB_COMPLETED
 
 As the runner needs access to docker for actions, you need to add the following docker parameter in Custom Docker Options:
 ```
