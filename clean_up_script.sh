@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./clean_up
+/github_runner_data/clean_up
